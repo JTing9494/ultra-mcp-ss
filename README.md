@@ -86,7 +86,7 @@ Use your MCP client to invoke tools by name (e.g., `drop`, `notify`, `toast`, et
    }
    ```
 
-3. On macOS:  
+3. On MacOS:  
    Get the path to `mcp-proxy`:
    ```bash
    which mcp-proxy
