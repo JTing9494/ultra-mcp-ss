@@ -6,36 +6,36 @@ ultra/mcp-ss is a FastAPI-based MCP server that integrates with smartscreen.tv, 
 - Python 3.12+
 - Docker (optional, for containerized deployment)
 - YOUTUBE_API_KEY set up from Google Console for "YouTube Data API v3"
-- SMARTSCREEN_SERVICE_TOKEN environment variable
+- SS_SERVICE_TOKEN environment variable
 
 ## Configuration
 Create a `.env` file or export environment variables:
 - YOUTUBE_API_KEY – your Google YouTube Data API v3 key  
-- SMARTSCREEN_SERVICE_TOKEN – SmartScreen service token
+- SS_SERVICE_TOKEN – SmartScreen service token
 
 Example `.env`:
 ```dotenv
 YOUTUBE_API_KEY=AIzaSy...
-SMARTSCREEN_SERVICE_TOKEN=xxxxx
+SS_SERVICE_TOKEN=xxxxx
 ```
 or export them:
 ```bash
 export YOUTUBE_API_KEY=AIzaSy...
-export SMARTSCREEN_SERVICE_TOKEN=xxxxx
+export SS_SERVICE_TOKEN=xxxxx
 ```
 
 ## Running Locally
 ```bash
-uvicorn main:app --reload --host 0.0.0.0 --port 8001
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 ## Docker
 ```bash
 docker build -t ultra-mcp-ss .
-docker run -d --name ultra-mcp-ss -p 127.0.0.1:8001:8001 ultra-mcp-ss
+docker run -d --name ultra-mcp-ss -p 127.0.0.1:8000:8000 ultra-mcp-ss
 ```
 ## API Endpoints
-Base URL: `http://127.0.0.1:8001`
+Base URL: `http://127.0.0.1:8000`
 
 ### Health & Search
 
@@ -56,7 +56,7 @@ Base URL: `http://127.0.0.1:8001`
 | POST /status    | Query or set system status                          |
 | POST /dj        | Execute DJ tasks: scheduling, kiosk, restart, logo  |
 
-Refer to OpenAPI docs at `http://<host>:8001/docs` for request/response schemas.
+Refer to OpenAPI docs at `http://<host>:8000/docs` for request/response schemas.
 
 ## MCP Tool Integration
 
@@ -67,7 +67,7 @@ Use your MCP client to invoke tools by name (e.g., `drop`, `notify`, `toast`, et
 
 1. Install mcp-proxy:
    ```bash
-   pip install --user mcp-proxy #for Python
+   uv pip install --user mcp-proxy #for Python
    npm install -g mcp-proxy #for Node.js
    pnpm add -g mcp-proxy #for Node.js
     
@@ -78,9 +78,9 @@ Use your MCP client to invoke tools by name (e.g., `drop`, `notify`, `toast`, et
    ```json
    {
      "mcpServers": {
-       "smartscreen-mcp": {
+       "ultra-mcp-ss": {
          "command": "mcp-proxy",
-         "args": ["http://0.0.0.0:8001/mcp"]
+         "args": ["http://0.0.0.0:8000/mcp"]
        }
      }
    }
@@ -95,9 +95,9 @@ Use your MCP client to invoke tools by name (e.g., `drop`, `notify`, `toast`, et
    ```json
    {
      "mcpServers": {
-       "smartscreen-mcp": {
+       "ultra-mcp-ss": {
          "command": "/YOUR/PATH/TO/mcp-proxy",
-         "args": ["http://0.0.0.0:8001/mcp"]
+         "args": ["http://0.0.0.0:8000/mcp"]
        }
      }
    }

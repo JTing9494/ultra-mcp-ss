@@ -6,7 +6,7 @@ import httpx
 from fastapi_mcp import FastApiMCP
 from dotenv import load_dotenv
 
-app = FastAPI(title="SmartScreen Agent API")
+app = FastAPI(title="ultra-mcp-ss")
 
 load_dotenv()
 
@@ -613,11 +613,11 @@ Key options:
 
 mcp = FastApiMCP(
     app,
-    name="smartscreen-mcp"
+    name="ultra-mcp-ss"
 )
 mcp.mount()  # mounts at '/mcp' by default
 
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8001, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
