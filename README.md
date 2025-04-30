@@ -118,6 +118,19 @@ Use your MCP client to invoke tools by name (e.g., `drop`, `notify`, `toast`, et
    }
    ```
 
+## Setting up MCP-SS in Langflow
+
+To integrate ultra-mcp-ss with Langflow:
+
+<p align="center"> <img src="./img/mcpserver-component.png" alt="drawing" width="300"/></p>
+
+1. Add MCP Server component from the Tool section in Langflow
+2. Enable Tool Mode in the component settings
+3. Select SSE Mode for real-time communication
+4. Enter the MCP SSE URL: `http://0.0.0.0:8000/mcp`
+5. Run the component to establish connection
+
+Once connected, you can use all SmartScreen commands within your Langflow workflows.
 
 ## Contributing
 
