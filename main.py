@@ -613,7 +613,7 @@ Key options:
 
 mcp = FastApiMCP(
     app,
-    name="SmartScreen MCP"
+    name="smartscreen-mcp"
 )
 mcp.mount()  # mounts at '/mcp' by default
 

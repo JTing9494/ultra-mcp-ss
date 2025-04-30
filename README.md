@@ -63,13 +63,46 @@ Refer to OpenAPI docs at `http://<host>:8001/docs` for request/response schemas.
 FastApiMCP automatically mounts all endpoints as MCP tools under `/mcp`.  
 Use your MCP client to invoke tools by name (e.g., `drop`, `notify`, `toast`, etc.).
 
-## Testing
+## Using MCP Proxy for Clients Without SSE Support (Claude Desktop)
 
-```bash
-curl -X POST http://localhost:8001/notify \
-  -H "Content-Type: application/json" \
-  -d '{"display":"ss001","message":"Hello","priority":"normal"}'
-```
+1. Install mcp-proxy:
+   ```bash
+   pip install --user mcp-proxy #for Python
+   npm install -g mcp-proxy #for Node.js
+   pnpm add -g mcp-proxy #for Node.js
+    
+   ```
+
+2. On Windows:  
+   Edit `claude_desktop_config.json`:
+   ```json
+   {
+     "mcpServers": {
+       "smartscreen-mcp": {
+         "command": "mcp-proxy",
+         "args": ["http://0.0.0.0:8001/mcp"]
+       }
+     }
+   }
+   ```
+
+3. On macOS:  
+   Get the path to `mcp-proxy`:
+   ```bash
+   which mcp-proxy
+   ```
+   Edit `claude_desktop_config.json`:
+   ```json
+   {
+     "mcpServers": {
+       "smartscreen-mcp": {
+         "command": "/YOUR/PATH/TO/mcp-proxy",
+         "args": ["http://0.0.0.0:8001/mcp"]
+       }
+     }
+   }
+   ```
+
 
 ## Contributing
 
