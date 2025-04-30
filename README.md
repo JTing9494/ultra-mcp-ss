@@ -1,5 +1,20 @@
 ultra/mcp-ss is a FastAPI-based MCP server that integrates with smartscreen.tv, a web display service, allowing you to programmatically manipulate the screen (e.g., display media, send notifications, control playback) via simple HTTP/MCP commands.
 
+## What is SmartScreen?
+
+SmartScreen is a web-based screening service.  
+Content across multiple displays and locations can be controlled remotely. Simply add the MCP tool to your AI app.
+
+SmartScreen setup:
+1. Access SmartScreen through URL: smartscreen.tv  
+![Smartscreen](./img/img/smartscreen-main.png "Smartscreen")
+   * On Linux, SmartScreen can be installed via snapcraft.
+2. Click the menu button on the top-left corner to reach 
+**Settings**. Here you can name your device, add tags, and set up OnStart and other scheduled events.  
+![Settings](./img/img/settings.png "Settings")
+   * Don’t forget to click “Save” after making any changes.
+3. Click **SmartScreen** to return to the Home Page.
+
 # ultra/mcp-ss
 
 ## Prerequisites

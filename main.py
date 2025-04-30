@@ -15,7 +15,7 @@ YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3/search"
 
 
 SMARTSCREEN_API_URL = "https://smartscreen.tv/api"
-SMARTSCREEN_SERVICE_TOKEN = os.environ.get("SMARTSCREEN_SERVICE_TOKEN")
+SMARTSCREEN_SERVICE_TOKEN = os.environ.get("SS_SERVICE_TOKEN")
 
 
 async def search_youtube_video(query: str) -> str | None:
