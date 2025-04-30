@@ -1,0 +1,7 @@
+fastapi>=0.101.0
+uvicorn>=0.23.2
+pydantic>=2.3.0
+httpx>=0.24.1
+fastapi-mcp
+python-multipart
+dotenv
