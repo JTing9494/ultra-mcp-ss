@@ -1,9 +1,23 @@
-ultra/mcp-ss is a FastAPI-based MCP server that integrates with smartscreen.tv, a web display service, allowing you to programmatically manipulate the screen (e.g., display media, send notifications, control playback) via simple HTTP/MCP commands.
+A FastAPI-based MCP server that integrates with [SmartScreen](#smartscreen-setup), allowing programmatic control of web displays (e.g., display media, send notifications, control playback) via simple HTTP/MCP commands.
 
-## What is SmartScreen?
+---
 
-SmartScreen is a web-based screening service.  
-Content across multiple displays and locations can be controlled remotely. Simply add the MCP tool to your AI app.
+## Table of Contents
+
+1. [Prerequisites](#prerequisites)
+2. [Installation](#installation)
+
+   * [Local Setup](#local-setup)
+   * [Docker](#docker)
+3. [Configuration](#configuration)
+4. [API Endpoints](#api-endpoints)
+5. [SmartScreen Setup](#smartscreen-setup)
+6. [MCP Tool Integration](#mcp-tool-integration)
+7. [MCP Proxy for Clients Without SSE Support](#mcp-proxy-for-clients-without-sse-support)
+8. [Langflow Integration](#langflow-integration)
+9. [Contributing](#contributing)
+
+---
 
 SmartScreen setup:
 1. Access SmartScreen through URL: smartscreen.tv  
@@ -13,83 +27,130 @@ SmartScreen setup:
 **Settings**. Here you can name your device, add tags, and set up OnStart and other scheduled events.  
 ![Settings](./img/settings.png "Settings")
    * Don’t forget to click “Save” after making any changes.
-3. Click **SmartScreen** to return to the Home Page.
-
-# ultra/mcp-ss
 
 ## Prerequisites
-- Python 3.12+
-- Docker (optional, for containerized deployment)
-- YOUTUBE_API_KEY set up from Google Console for "YouTube Data API v3"
-- SS_SERVICE_TOKEN environment variable
+
+* Python 3.12+
+* Docker (optional, for containerized deployment)
+* `YOUTUBE_API_KEY` (YouTube Data API v3 key)
+* `SS_SERVICE_TOKEN` (SmartScreen service token)
+
+## Installation
+
+### Local Setup
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repo_url>
+   cd ultra/mcp-ss
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Run the server:
+
+   ```bash
+   uvicorn main:app --reload --host 0.0.0.0 --port 8000
+   ```
+
+### Docker
+
+1. Build the image:
+
+   ```bash
+   docker build -t ultra-mcp-ss .
+   ```
+2. Run the container:
+
+   ```bash
+   docker run -d --name ultra-mcp-ss -p 127.0.0.1:8000:8000 ultra-mcp-ss
+   ```
 
 ## Configuration
-Create a `.env` file or export environment variables:
-- YOUTUBE_API_KEY – your Google YouTube Data API v3 key  
-- SS_SERVICE_TOKEN – SmartScreen service token
 
-Example `.env`:
+Create a `.env` file in the project root or export environment variables:
+
 ```dotenv
 YOUTUBE_API_KEY=AIzaSy...
 SS_SERVICE_TOKEN=xxxxx
 ```
-or export them:
+
+Or via shell:
+
 ```bash
 export YOUTUBE_API_KEY=AIzaSy...
 export SS_SERVICE_TOKEN=xxxxx
 ```
 
-## Running Locally
-```bash
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
-
-## Docker
-```bash
-docker build -t ultra-mcp-ss .
-docker run -d --name ultra-mcp-ss -p 127.0.0.1:8000:8000 ultra-mcp-ss
-```
 ## API Endpoints
+
 Base URL: `http://127.0.0.1:8000`
 
 ### Health & Search
 
-- `HEAD /mcp` – health check for MCP  
-- `GET /search-youtube?query=...` – returns the most relevant YouTube video URL
+| Endpoint              | Method | Description                           |
+| --------------------- | ------ | ------------------------------------- |
+| `HEAD /mcp`           | HEAD   | Health check for MCP                  |
+| `GET /search-youtube` | GET    | Returns the most relevant YouTube URL |
 
 ### SmartScreen Commands (HTTP)
 
-| Endpoint        | Description                                          |
-| --------------- | ---------------------------------------------------- |
-| POST /drop      | Drop media URL onto a screen frame                  |
-| POST /notify    | Send a notification banner                          |
-| POST /toast     | Show a toast popup message                          |
-| POST /marquee   | Display scrolling marquee text                      |
-| POST /text      | Render static text overlay                          |
-| POST /app       | Launch a web app in a frame                         |
-| POST /touch     | Send playback/control commands                      |
-| POST /status    | Query or set system status                          |
-| POST /dj        | Execute DJ tasks: scheduling, kiosk, restart, logo  |
+| Endpoint   | Method | Description                                      |
+| ---------- | ------ | ------------------------------------------------ |
+| `/drop`    | POST   | Drop media URL onto a screen frame               |
+| `/notify`  | POST   | Send a notification banner                       |
+| `/toast`   | POST   | Show a toast popup message                       |
+| `/marquee` | POST   | Display scrolling marquee text                   |
+| `/text`    | POST   | Render static text overlay                       |
+| `/app`     | POST   | Launch a web app in a frame                      |
+| `/touch`   | POST   | Send playback/control commands                   |
+| `/status`  | POST   | Query or set system status                       |
+| `/dj`      | POST   | Execute DJ tasks (scheduling, kiosk, logo, etc.) |
 
-Refer to OpenAPI docs at `http://<host>:8000/docs` for request/response schemas.
+For detailed schemas and models, visit the OpenAPI docs: `http://<host>:8000/docs`
+
+## SmartScreen Setup
+
+SmartScreen is a web-based display service. To configure your device:
+
+1. Access the dashboard at: `https://smartscreen.tv`
+   ![SmartScreen Home](./img/smartscreen-main.png)
+2. Open **Settings** (menu ☰):
+
+   * Name your device
+   * Add tags
+   * Configure **OnStart** and other scheduled events
+   * Click **Save**
+     ![Settings](./img/settings.png)
+3. Return to the Home Page to see your device online.
 
 ## MCP Tool Integration
 
-FastApiMCP automatically mounts all endpoints as MCP tools under `/mcp`.  
-Use your MCP client to invoke tools by name (e.g., `drop`, `notify`, `toast`, etc.).
+By default, FastApiMCP mounts all commands under `/mcp`. Use any MCP client to invoke tools by name (e.g., `drop`, `notify`, `toast`).
 
-## Using MCP Proxy for Clients Without SSE Support (Claude Desktop)
+## MCP Proxy for Clients Without SSE Support
 
-1. Install mcp-proxy:
+For clients that lack native SSE, such as Claude Desktop:
+
+1. Install `mcp-proxy`:
+
    ```bash
-   uv pip install --user mcp-proxy #for Python
-   npm install -g mcp-proxy #for Node.js
-   pnpm add -g mcp-proxy #for Node.js
-    
-   ```
+   # Python
+   pip install mcp-proxy
 
-2. On Windows:  
-   Edit `claude_desktop_config.json`:
+   # Node.js
+   npm install -g mcp-proxy
+   pnpm add -g mcp-proxy
+   ```
+2. Configure `claude_desktop_config.json`:
+
+   **Windows**
+
    ```json
    {
      "mcpServers": {
@@ -101,43 +162,45 @@ Use your MCP client to invoke tools by name (e.g., `drop`, `notify`, `toast`, et
    }
    ```
 
-3. On MacOS:  
-   Get the path to `mcp-proxy`:
+   **macOS**
+
    ```bash
-   which mcp-proxy
+   which mcp-proxy  # find install path
    ```
-   Edit `claude_desktop_config.json`:
+
    ```json
    {
      "mcpServers": {
        "ultra-mcp-ss": {
-         "command": "/YOUR/PATH/TO/mcp-proxy",
+         "command": "/path/to/mcp-proxy",
          "args": ["http://0.0.0.0:8000/mcp"]
        }
      }
    }
    ```
 
-## Setting up MCP-SS in Langflow
+## Langflow Integration
 
-To integrate ultra-mcp-ss with Langflow:
+To use `ultra/mcp-ss` in Langflow:
 
-<p align="center"> <img src="./img/mcpserver-component.png" alt="drawing" width="300"/></p>
+1. Add the **MCP Server** component from the **Tools** section.
+2. Enable **Tool Mode**.
+3. Select **SSE Mode** for real-time updates.
+4. Set the URL to `http://0.0.0.0:8000/mcp`.
+5. Run the component and execute SmartScreen commands within your flows.
 
-1. Add MCP Server component from the Tool section in Langflow
-2. Enable Tool Mode in the component settings
-3. Select SSE Mode for real-time communication
-4. Enter the MCP SSE URL: `http://0.0.0.0:8000/mcp`
-5. Run the component to establish connection
-
-Once connected, you can use all SmartScreen commands within your Langflow workflows.
+<p align="center">
+  <img src="./img/mcpserver-component.png" alt="Langflow MCP Server Component" width="300"/>
+</p>
 
 ## Contributing
 
-1. Fork the repo  
-2. Create a feature branch  
-3. Submit a pull request  
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Commit changes and push: `git push origin feature/my-feature`
+4. Open a Pull Request for review.
 
 ---
 
-Made with FastAPI & FastApiMCP
+> Made with FastAPI & FastApiMCP
+
