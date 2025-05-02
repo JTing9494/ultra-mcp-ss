@@ -19,15 +19,6 @@ A FastAPI-based MCP server that integrates with [SmartScreen](#smartscreen-setup
 
 ---
 
-SmartScreen setup:
-1. Access SmartScreen through URL: smartscreen.tv  
-![Smartscreen](./img/smartscreen-main.png "Smartscreen")
-   * On Linux, SmartScreen can be installed via snapcraft.
-2. Click the menu button on the top-left corner to reach 
-**Settings**. Here you can name your device, add tags, and set up OnStart and other scheduled events.  
-![Settings](./img/settings.png "Settings")
-   * Don’t forget to click “Save” after making any changes.
-
 ## Prerequisites
 
 * Python 3.12+
