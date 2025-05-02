@@ -1,4 +1,6 @@
 
+<p align="center"> <img src="./img/mcp-ss.png" alt="drawing" width="400"/></p>
+
 ultra/mcp-ss is a FastAPI-based MCP server that integrates with smartscreen.tv, a web display service, allowing you to programmatically manipulate the screen (e.g., display media, send notifications, control playback) via simple HTTP/MCP commands.
 
 <table>
@@ -21,7 +23,12 @@ ultra/mcp-ss is a FastAPI-based MCP server that integrates with smartscreen.tv, 
 
     </td>
     <td valign="middle" align="center">
-
+<p align="center">
+  <img src="./img/smartscreen_512x512.png" width="500" alt="mcp logo">
+</p>
+<p align="center">
+  <img src="./img/arrow.webp" width="500" alt="mcp logo">
+</p>
 <p align="center">
   <img src="./img/mcp-white.png" width="500" alt="mcp logo">
 </p>
