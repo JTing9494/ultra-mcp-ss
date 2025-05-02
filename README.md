@@ -1,5 +1,19 @@
 ultra/mcp-ss is a FastAPI-based MCP server that integrates with smartscreen.tv, a web display service, allowing you to programmatically manipulate the screen (e.g., display media, send notifications, control playback) via simple HTTP/MCP commands.
 
+## Table of Contents
+- [What is SmartScreen?](#what-is-smartscreen)
+- [Prerequisites](#prerequisites)
+- [Configuration](#configuration)
+- [Running Locally](#running-locally)
+- [Docker](#docker)
+- [API Endpoints](#api-endpoints)
+  - [Health & Search](#health--search)
+  - [SmartScreen Commands (HTTP)](#smartscreen-commands-http)
+- [MCP Tool Integration](#mcp-tool-integration)
+- [Using MCP Proxy for Clients Without SSE Support](#using-mcp-proxy-for-clients-without-sse-support-claude-desktop)
+- [Setting up MCP-SS in Langflow](#setting-up-mcp-ss-in-langflow)
+- [Contributing](#contributing)
+
 ## What is SmartScreen?
 
 SmartScreen is a web-based screening service.  
