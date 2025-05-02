@@ -24,13 +24,13 @@ ultra/mcp-ss is a FastAPI-based MCP server that integrates with smartscreen.tv, 
     </td>
     <td valign="middle" align="center">
 <p align="center">
-  <img src="./img/ss-logo.png" width="100" alt="mcp logo">
+  <img src="./img/mcp-white.png" width="100" alt="mcp logo">
 </p>
 <p align="center">
   <img src="./img/arrow.webp" width="50" alt="mcp logo">
 </p>
 <p align="center">
-  <img src="./img/mcp-white.png" width="100" alt="mcp logo">
+  <img src="./img/ss-logo.png" width="100" alt="mcp logo">
 </p>
 
   </td>
