@@ -142,6 +142,7 @@ To integrate ultra-mcp-ss with Langflow:
 2. Enable Tool Mode in the component settings
 3. Select SSE Mode for real-time communication
 4. Enter the MCP SSE URL: `http://0.0.0.0:8000/mcp`
+4. Use `http://127.0.0.1:8000` if running using **Docker**.
 5. Run the component to establish connection
 
 Once connected, you can use all SmartScreen commands within your Langflow workflows.
